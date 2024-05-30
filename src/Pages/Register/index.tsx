@@ -90,7 +90,7 @@ export default function Register() {
                 </JoinField>
 
                 <Button type="button" disabled={validation} onClick={async ()=> {
-                    const r = await product.addProductInTable(data);
+                    await product.addProductInTable(data);
                     window.location.href = "/gerenciamento"
                 }} color="white" bgcolor="#486623">Confirmar</Button>
 
