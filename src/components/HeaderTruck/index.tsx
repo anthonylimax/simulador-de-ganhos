@@ -1,6 +1,4 @@
-import { Product } from "../../interfaces/product";
-import { calculateMaxProducts } from "../../services/calculate_max";
-import { CellBody, CellContent } from "../../styles/global_styles";
+import { CellContent } from "../../styles/global_styles";
 import { Header } from "./headerTruck";
 
 export default function HeaderTruck() {

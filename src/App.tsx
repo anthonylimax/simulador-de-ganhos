@@ -1,5 +1,3 @@
-import { useEffect, useRef, useState } from 'react'
-import Navbar from './components/Navbar'
 import Management from './Pages/Management'
 import Register from './Pages/Register'
 import Simulacao from './Pages/Simulacao'

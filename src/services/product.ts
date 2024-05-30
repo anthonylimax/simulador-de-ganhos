@@ -1,6 +1,6 @@
 import app from "../config/firebase";
 import { Product } from "../interfaces/product";
-import { addDoc, collection, getDocs, getFirestore, deleteDoc, doc, updateDoc, CollectionReference, getDoc, DocumentData, DocumentReference, query } from "firebase/firestore";
+import { addDoc, collection, getDocs, getFirestore, deleteDoc, doc, updateDoc} from "firebase/firestore";
 
 export class ProductServices {
     static instance: ProductServices = new ProductServices();

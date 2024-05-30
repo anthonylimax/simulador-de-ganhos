@@ -4,7 +4,6 @@ import { Product } from "../../interfaces/product";
 import { calculateMaxProducts } from "../../services/calculate_max";
 import { ProductServices } from "../../services/product";
 import { CellBody, CellContent } from "../../styles/global_styles";
-import { Smocker } from "./cell";
 import Modal from "../Modal";
 import { calculatePrice } from "../../services/calculate_price";
 

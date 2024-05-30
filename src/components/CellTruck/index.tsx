@@ -4,7 +4,6 @@ import { Truck } from "../../interfaces/truck";
 import { CellContent } from "../../styles/global_styles";
 import { CellBody } from "./cell";
 import { calculatePrice as Calc } from "../../services/calculate_price";
-import ModalForCombination from "../ModalForCombination";
 import { useNavigate } from "react-router-dom";
 import { CaminhaoService } from "../../services/caminhao";
 
