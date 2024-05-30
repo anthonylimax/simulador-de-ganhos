@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { colors } from "../../styles/global_styles";
 
 export const Modal = styled.div`
 background-color: white;
