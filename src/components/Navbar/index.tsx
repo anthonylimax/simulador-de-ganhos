@@ -8,7 +8,7 @@ export default function Navbar(){
         <Nav>
             <img src="https://arquivos.mercos.com/media/logomarca/301137/a69b9d90-95e5-11ea-9e72-0242ac120009.png" alt="" />
             <Links>
-                <Link style={location.pathname === "/gerenciamento" ? {color: colors.primary} : {}} to={"/gerenciamento"}>Gerenciamento</Link>
+                <Link style={location.pathname === "/" ? {color: colors.primary} : {}} to={"/"}>Gerenciamento</Link>
                 <Link style={location.pathname.includes("/combinacoes") ? {color: colors.primary} : {}} to={"/combinacoes"}>Simulação</Link>
                 <Link style={location.pathname === "/register" ? {color: colors.primary} : {}} to={"/register"}>Formulário</Link>
             </Links>

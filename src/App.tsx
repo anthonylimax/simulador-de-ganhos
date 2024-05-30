@@ -18,7 +18,7 @@ function App() {
     element: <Layout><Simulacao /></Layout>
   },
   {
-    path: "/gerenciamento",
+    path: "/",
     element: <Layout><Management /></Layout>
   },
   {
