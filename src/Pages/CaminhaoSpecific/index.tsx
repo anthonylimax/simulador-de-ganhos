@@ -46,7 +46,7 @@ export default function CaminhaoSpecific() {
                 <ContainerCells>
                     <HeaderToSpecific />
                     {
-                        data.map((product, index) => (
+                        data.map((product) => (
                                 <CellProductByTruck length={calculateNumber()} operationCoust={operationCoust} product={{ ...product.produto }} truckId={truckId} setData={setData} data={data} quantity={product.quantity} truckWeightMax={truckWeightMax} truckSpaceMax={truckSpaceMax} />
                                 
                         ))

@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { Button } from "../../Pages/Register/register";
 import { Product } from "../../interfaces/product";
 import { calculateMaxProducts } from "../../services/calculate_max";
@@ -6,7 +6,6 @@ import { CellBody, CellContent } from "../../styles/global_styles";
 import { calculatePrice } from "../../services/calculate_price";
 import { Truck } from "../../interfaces/truck";
 import { CaminhaoService } from "../../services/caminhao";
-import { useNavigate } from "react-router-dom";
 
 export default function SelectProduct({ product, caminhao }: { product: Product, caminhao: Truck }) {
     const result = calculateMaxProducts(product);

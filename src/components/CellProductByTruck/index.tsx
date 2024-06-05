@@ -1,7 +1,6 @@
 
 import { Button } from "../../Pages/Register/register";
 import { Product } from "../../interfaces/product";
-import { calculateMaxProducts } from "../../services/calculate_max";
 import { CellBody, CellContent } from "../../styles/global_styles";
 import { calculatePrice } from "../../services/calculate_price";
 import { formatadorDeMilharesComRegex } from "../../services/formater";
@@ -10,7 +9,6 @@ import { CaminhaoService } from "../../services/caminhao";
 
 export default function CellProductByTruck({ product, length, truckId, setData, data, operationCoust, quantity, truckSpaceMax, truckWeightMax}: { product: Product, length: number, truckId: string, setData: any, data: any[],operationCoust: number, quantity: number, truckWeightMax: number, truckSpaceMax: number}) {
 
-    const result = calculateMaxProducts(product);
     const finalPrice : number = calculatePrice(product, length, operationCoust);
     
     function handleRemoveProduct(productId: string) {

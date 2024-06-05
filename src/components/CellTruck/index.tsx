@@ -5,7 +5,6 @@ import { CellContent } from "../../styles/global_styles";
 import { CellBody } from "./cell";
 import { calculatePrice as Calc } from "../../services/calculate_price";
 import { useNavigate } from "react-router-dom";
-import { CaminhaoService } from "../../services/caminhao";
 import { formatadorDeMilharesComRegex } from "../../services/formater";
 
 export default function Cell({ truck }: { truck: Truck }) {

@@ -5,7 +5,6 @@ import { Truck } from "../../interfaces/truck";
 import Cell from "../../components/CellTruck";
 import { Button, Field, Form, InputLabel, JoinField } from "../Register/register";
 import { Modal, Smocker } from "../../components/Cell/cell";
-import { Header } from "../../components/HeaderTruck/headerTruck";
 import HeaderTruck from "../../components/HeaderTruck";
 
 export default function Simulacao() {
