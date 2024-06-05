@@ -2,18 +2,20 @@ import { useEffect, useState } from "react";
 import { Container, ContainerCells } from "../../styles/global_styles";
 import { CaminhaoService } from "./../../services/caminhao"
 import { Truck } from "../../interfaces/truck";
-import HeaderTruck from "../../components/HeaderTruck";
 import Cell from "../../components/CellTruck";
 import { Button, Field, Form, InputLabel, JoinField } from "../Register/register";
 import { Modal, Smocker } from "../../components/Cell/cell";
+import { Header } from "../../components/HeaderTruck/headerTruck";
+import HeaderTruck from "../../components/HeaderTruck";
 
 export default function Simulacao() {
     const [data, setData]: [Truck[], any] = useState([]);
     const [createNewTruck, setCreateNewTruck] = useState<Truck>({operationCoust: 0, products: [], title: "", truckWeightMax: 0, truckSpaceMax: 0});
     const [click, setClick] = useState(false);
     const service: CaminhaoService = CaminhaoService.getInstance();
+    
     useEffect(() => {
-        service.getAllProducts().then((result: Truck[]) => {
+        service.getAllTrucks().then((result: Truck[]) => {
             setData(result);
         }).catch(() => {
             console.log("erro")
@@ -24,7 +26,7 @@ export default function Simulacao() {
         <Container>
             <h2>Combinações</h2>
             <h3>Aqui você pode fazer seus caminhões e adicionar os produtos que desejar!</h3>
-            <Button onClick={() => setClick(true)} bgcolor="yellow" style={{ fontWeight: "bold", marginTop: 50 }}>Adicionar novo produto</Button>
+            <Button onClick={() => setClick(true)} color="white" bgcolor="blue" style={{ fontWeight: "bold", marginTop: 50 }}>Adicionar nova combinação</Button>
             <ContainerCells>
                 <HeaderTruck></HeaderTruck>
                 {
@@ -62,8 +64,6 @@ export default function Simulacao() {
                                     </div>
                                 </div>
                             </Form>
-
-
                         </Modal>
                     </Smocker>
                 )

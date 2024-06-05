@@ -6,6 +6,7 @@ import { CellBody } from "./cell";
 import { calculatePrice as Calc } from "../../services/calculate_price";
 import { useNavigate } from "react-router-dom";
 import { CaminhaoService } from "../../services/caminhao";
+import { formatadorDeMilharesComRegex } from "../../services/formater";
 
 export default function Cell({ truck }: { truck: Truck }) {
     const [volumn, setVolumn] = useState(0);
@@ -61,12 +62,9 @@ export default function Cell({ truck }: { truck: Truck }) {
             <CellContent>{truck.truckSpaceMax}</CellContent>
             <CellContent>{truck.truckWeightMax}</CellContent>
             <CellContent>{quantity}</CellContent>
-            <CellContent>{price * quantity}</CellContent>
+            <CellContent>{formatadorDeMilharesComRegex(price * quantity)}</CellContent>
             <CellContent>
-                <Button bgcolor="red" onClick={() => {if(truck.id)CaminhaoService.instance.removeProductInTable(truck.id)}} color="white">Excluir</Button>
-            </CellContent>
-            <CellContent>
-                <Button bgcolor="blue" onClick={() => {}} color="white">Editar</Button>
+                <Button bgcolor="red" onClick={() => {}} color="white">Excluir</Button>
             </CellContent>
         </CellBody>
     );

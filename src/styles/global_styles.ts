@@ -43,8 +43,6 @@ export const CellBody = styled.div`
     background-color: ${colors.second};
     color: black;
     width: clamp(1600px, 90vw,  1920px);
-
-
 `
 export const Header = styled.div`
     display: grid;

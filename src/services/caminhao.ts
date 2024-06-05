@@ -1,67 +1,60 @@
 import app from "../config/firebase";
+import { Product } from "../interfaces/product";
 import { Truck } from "../interfaces/truck";
-import { addDoc, collection, getDocs, getFirestore, deleteDoc, doc, updateDoc } from "firebase/firestore";
+import { addDoc, collection, getDocs, getFirestore, updateDoc, doc, getDoc } from "firebase/firestore";
 
 export class CaminhaoService {
     static instance: CaminhaoService = new CaminhaoService();
-
     firestore = getFirestore(app);
+
     private constructor() {}
-    
+
     static getInstance() {
         return this.instance;
     }
 
-    async getAllProducts(): Promise<Truck[]> {
+    async getAllTrucks(): Promise<Truck[]> {
         try {
-            const produtosRef = collection(this.firestore, 'caminhao');
-            const produtosSnapshot = await getDocs(produtosRef);
-            let produtosData: any[] = produtosSnapshot.docs.map( (doc) => ({
-                ...doc.data(),
-                id: doc.id
-            }));
-            return produtosData;
+            const truckRef = collection(this.firestore, 'caminhao');
+            const truckSnapshot = await getDocs(truckRef);
+            return truckSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })) as Truck[];
         } catch (error) {
-            console.log("Erro ao obter os produtos:", error);
+            console.error("Erro ao obter os caminhões:", error);
             return [];
-        }
-    }
-
-    async removeProductInTable(id: string) {
-        try {
-            await deleteDoc(doc(this.firestore, "caminhao", id));
-            console.log("Produto Removido com sucesso!");
-            window.location.reload();
-            return 0;
-        } catch (error) {
-            console.log("Erro ao remover o produto:", error);
-            return 1;
         }
     }
 
     async addNewTruck(truck: Truck) {
         try {
             await addDoc(collection(this.firestore, "caminhao"), truck);
-            console.log("Truck adicionado com sucesso!");
-            return 0;
+            console.log("Caminhão adicionado com sucesso!");
         } catch (error) {
-            console.log("Erro ao adicionar o truck:", error);
-            return 1;
+            console.error("Erro ao adicionar caminhão:", error);
         }
     }
 
-    async updateTruck(id: string, updatedTruck: Truck) {
+    async updateTruckProducts(truckId: string, products: { produto: Product, quantity: number }[]) {
         try {
-            const productRef = doc(this.firestore, "caminhao", id);
-            await updateDoc(productRef, updatedTruck);
-            console.log("Truck atualizado com sucesso!");
-            location.reload();
-            return 0;
+            const truckRef = doc(this.firestore, "caminhao", truckId);
+            await updateDoc(truckRef, { products });
+            console.log("Produtos atualizados com sucesso no caminhão!");
         } catch (error) {
-            console.log("Erro ao atualizar o caminhao:", id, error);
-            return 1;
+            console.error("Erro ao atualizar produtos no caminhão:",     error);
+        }
+    }
+
+    async removeProductFromTruck(truckId: string, productId: string) {
+        try {
+            const truckRef = doc(this.firestore, "caminhao", truckId);
+            const truckSnapshot = await getDoc(truckRef);
+            if (truckSnapshot.exists()) {
+                const truckData = truckSnapshot.data() as Truck;
+                const updatedProducts = truckData.products.filter(p => p.produto.id !== productId);
+                await updateDoc(truckRef, { products: updatedProducts });
+                console.log("Produto removido com sucesso do caminhão!");
+            }
+        } catch (error) {
+            console.error("Erro ao remover produto do caminhão:", error);
         }
     }
 }
-
-
