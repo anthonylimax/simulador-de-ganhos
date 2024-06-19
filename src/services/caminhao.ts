@@ -26,6 +26,7 @@ export class CaminhaoService {
 
     async addNewTruck(truck: Truck) {
         try {
+            console.log("Tentando adicionar caminhão:", truck);  // Log para depuração
             await addDoc(collection(this.firestore, "caminhao"), truck);
             console.log("Caminhão adicionado com sucesso!");
         } catch (error) {
@@ -37,9 +38,10 @@ export class CaminhaoService {
         try {
             const truckRef = doc(this.firestore, "caminhao", truckId);
             await updateDoc(truckRef, { products });
+
             console.log("Produtos atualizados com sucesso no caminhão!");
         } catch (error) {
-            console.error("Erro ao atualizar produtos no caminhão:",     error);
+            console.error("Erro ao atualizar produtos no caminhão:", error);
         }
     }
 

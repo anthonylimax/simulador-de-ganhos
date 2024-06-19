@@ -1,16 +1,22 @@
 
 import { Button } from "../../Pages/Register/register";
 import { Product } from "../../interfaces/product";
-import { CellBody, CellContent } from "../../styles/global_styles";
+import { CellBody, CellContent, InputQuantity } from "../../styles/global_styles";
 import { calculatePrice } from "../../services/calculate_price";
 import { formatadorDeMilharesComRegex } from "../../services/formater";
 import { CaminhaoService } from "../../services/caminhao";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 
 export default function CellProductByTruck({ product, length, truckId, setData, data, operationCoust, quantity, truckSpaceMax, truckWeightMax}: { product: Product, length: number, truckId: string, setData: any, data: any[],operationCoust: number, quantity: number, truckWeightMax: number, truckSpaceMax: number}) {
 
+
+
+    const location = useLocation();
+    console.log(location)
     const finalPrice : number = calculatePrice(product, length, operationCoust);
-    
+    const [exceedsLimit, setExceedsLimit] = useState(false);
     function handleRemoveProduct(productId: string) {
 
         if (truckId && productId) {
@@ -23,14 +29,33 @@ export default function CellProductByTruck({ product, length, truckId, setData, 
         }
     }
 
+
+    useEffect(()=>{
+        CaminhaoService.getInstance().updateTruckProducts(truckId, data);
+    }, [data])
+
+
+    function handleChange(event : any){
+        const _value = Number(event.target.value);
+        const a = data.findIndex((_, index) => _.produto.id === product.id);
+        const newData = [...data];
+        newData[a].quantity = _value;
+        setData(newData);
+        const totalWeight = _value * product.weight;
+        if(totalWeight/truckWeightMax * 100 > 100) setExceedsLimit(true)
+        else setExceedsLimit(false)
+    }
     
      return (
-    <CellBody>
-        <CellContent>{quantity}</CellContent>
+    <CellBody style={
+        exceedsLimit ? {
+        backgroundColor: "#99000030"
+    } : {}}>
+        <CellContent> <InputQuantity value={quantity} onChange={handleChange} type="number"></InputQuantity> </CellContent>
         <CellContent>{product.name}</CellContent>
         <CellContent>{formatadorDeMilharesComRegex(finalPrice)}</CellContent>
-        <CellContent>{formatadorDeMilharesComRegex((product.weight * quantity))}</CellContent>
-        <CellContent>{product.height * product.length * product.width * quantity}</CellContent>
+        <CellContent>{formatadorDeMilharesComRegex(quantity * product.weight / truckWeightMax * 100) + "%"}</CellContent>
+        <CellContent>{formatadorDeMilharesComRegex(product.height * product.length * product.width * quantity)}</CellContent>
         <CellContent>{formatadorDeMilharesComRegex(finalPrice * quantity)}</CellContent>
         <CellContent>{truckWeightMax}</CellContent>
         <CellContent>{truckSpaceMax}</CellContent>

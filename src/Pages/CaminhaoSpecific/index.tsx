@@ -13,7 +13,7 @@ import HeaderToSpecific from "../../components/headerToSpecific";
 
 export default function CaminhaoSpecific() {
     const location = useLocation();
-    const [data, setData] : [{produto: Product, quantity: number}[], any] = useState(location.state.products);
+    const [data, setData] : [{produto: Product, quantity: number}[], any] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [allProducts, setAllProducts] : [Product[], any] = useState([]);
     const truckId = location.state.truck.id;
@@ -29,7 +29,7 @@ export default function CaminhaoSpecific() {
             setTruckSpaceMax(truck ? truck.truckSpaceMax : 0);
             setTruckWeightMax(truck ? truck.truckWeightMax : 0);
         });
-    }, [truckId]);
+    }, [location]);
 
     function calculateNumber() {
         let number = 0;

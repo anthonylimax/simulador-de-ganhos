@@ -13,12 +13,19 @@ export default function Cell({ truck }: { truck: Truck }) {
     const [price, setPrice] = useState(0);
     const [quantity, setQuantity] = useState(0);
     const navigate = useNavigate();
+    
+    useEffect(()=>{
+        calculateWeigth();
+        calculateLength();
+        calculateTotalPrice();
+        calculateVolumn();
+    })
+    
     useEffect(() => {
         calculateWeigth();
         calculateLength();
         calculateTotalPrice();
         calculateVolumn();
-        console.log(truck)
     }, [truck]);
 
     const calculateWeigth = () => {
@@ -40,7 +47,7 @@ export default function Cell({ truck }: { truck: Truck }) {
     const calculateTotalPrice = () => {
         let totalPrice = 0;
         truck.products.forEach(product => {
-            totalPrice += Calc(product.produto, truck.products.length, truck.operationCoust);
+            totalPrice += Calc(product.produto, quantity, truck.operationCoust) * product.quantity;
         });
         setPrice(totalPrice);
     };
@@ -61,7 +68,7 @@ export default function Cell({ truck }: { truck: Truck }) {
             <CellContent>{truck.truckSpaceMax}</CellContent>
             <CellContent>{truck.truckWeightMax}</CellContent>
             <CellContent>{quantity}</CellContent>
-            <CellContent>{formatadorDeMilharesComRegex(price * quantity)}</CellContent>
+            <CellContent>{formatadorDeMilharesComRegex(price)}</CellContent>
             <CellContent>
                 <Button bgcolor="red" onClick={() => {}} color="white">Excluir</Button>
             </CellContent>

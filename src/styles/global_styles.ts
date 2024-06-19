@@ -54,3 +54,14 @@ export const Header = styled.div`
     color: white;
     width: clamp(1600px, 90vw, 1920px);
 `
+
+
+export const InputQuantity = styled.input`
+    background-color: transparent;
+    border: none;
+    text-align: center;
+    height: 100%;
+    width: 40%;
+    font-size: 20px;
+    outline: none;
+`
