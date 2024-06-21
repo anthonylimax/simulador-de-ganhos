@@ -19,13 +19,13 @@ export default function Cell({ product }: { product: Product }) {
      return (
     <CellBody>
         <CellContent>{product.name}</CellContent>
-        <CellContent>{ formatadorDeMilharesComRegex(finalPrice) }</CellContent>
-        <CellContent>{product.weight}</CellContent>
-        <CellContent>{(product.height * product.length * product.width).toFixed(2)}</CellContent>
-        <CellContent>{product.truckSpaceMax.toFixed(2)}</CellContent>
-        <CellContent>{product.truckWeightMax.toFixed(2)}</CellContent>
-        <CellContent>{result}</CellContent>
-        <CellContent>{ formatadorDeMilharesComRegex((result * finalPrice)) }</CellContent>
+        <CellContent>{formatadorDeMilharesComRegex(finalPrice) }</CellContent>
+        <CellContent>{formatadorDeMilharesComRegex(product.weight)}</CellContent>
+        <CellContent>{formatadorDeMilharesComRegex((product.height * product.length * product.width))}</CellContent>
+        <CellContent>{formatadorDeMilharesComRegex(product.truckSpaceMax)}</CellContent>
+        <CellContent>{formatadorDeMilharesComRegex(product.truckWeightMax)}</CellContent>
+        <CellContent>{formatadorDeMilharesComRegex(result)}</CellContent>
+        <CellContent>{formatadorDeMilharesComRegex((result * finalPrice)) }</CellContent>
         <CellContent>
             <Button bgcolor="red" onClick={()=> product.id && productService.removeProductInTable(product.id)} color="white">Excluir</Button>
         </CellContent>

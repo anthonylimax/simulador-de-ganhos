@@ -39,23 +39,23 @@ export default function Register() {
                     <Field onChange={({ target }) => setData({ ...data, name: target.value })} type="text" />
                 </JoinField>
                 <JoinField>
-                    <InputLabel>Preço de fabrica</InputLabel>
+                    <InputLabel>Preço de fabrica (R$)</InputLabel>
                     <Field onChange={({ target }) => setData({ ...data, factoryPrice: Number(target.value) })} type="number" />
                 </JoinField>
                 <JoinField>
-                    <InputLabel>IPI</InputLabel>
+                    <InputLabel>IPI (%)</InputLabel>
                     <Field onChange={({ target }) => setData({ ...data, ipi: Number(target.value) })} type="number" />
                 </JoinField>
                 <JoinField>
-                    <InputLabel>ICMS</InputLabel>
+                    <InputLabel>ICMS (%)</InputLabel>
                     <Field onChange={({ target }) => setData({ ...data, icms: Number(target.value) })} type="number" />
                 </JoinField>
                 <JoinField>
-                    <InputLabel>Peso</InputLabel>
+                    <InputLabel>Peso (Kg)</InputLabel>
                     <Field onChange={({ target }) => setData({ ...data, weight: Number(target.value) })} type="number" />
                 </JoinField>
                 <JoinField>
-                    <InputLabel>Lucro desejado</InputLabel>
+                    <InputLabel>Lucro desejado (R$)</InputLabel>
                     <Field onChange={({ target }) => setData({ ...data, profit: Number(target.value) })} type="number" />
                 </JoinField>
                 <JoinField>
@@ -79,7 +79,7 @@ export default function Register() {
                     <Field onChange={({ target }) => setData({ ...data, length: Number(target.value) })} type="number" />
                 </JoinField>
                 <JoinField>
-                    <InputLabel>Custo operacional</InputLabel>
+                    <InputLabel>Custo operacional + frete</InputLabel>
                     <Field onChange={({ target }) => setData({ ...data, operationCoust: Number(target.value) })} type="number" />
                 </JoinField>
 

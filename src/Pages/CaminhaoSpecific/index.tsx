@@ -12,11 +12,16 @@ import { Button } from "../Register/register";
 import HeaderToSpecific from "../../components/headerToSpecific";
 
 export default function CaminhaoSpecific() {
+
+
+    const styleForError : React.CSSProperties = {fontSize: 24, color: "#FF0000", maxWidth: 800, width: "90%", textAlign: "center", marginBottom: 10};
     const location = useLocation();
     const [data, setData] : [{produto: Product, quantity: number}[], any] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [allProducts, setAllProducts] : [Product[], any] = useState([]);
     const truckId = location.state.truck.id;
+    const [fullSpace, setFullSpace] = useState(false);
+    const [fullWeight, setFullWeight] = useState(false);
     const [operationCoust, setOperationCoust] = useState(0);
     const [truckSpaceMax, setTruckSpaceMax] = useState(0);
     const [truckWeightMax, setTruckWeightMax] = useState(0);
@@ -31,6 +36,10 @@ export default function CaminhaoSpecific() {
         });
     }, [location]);
 
+    useEffect(()=>{
+        checkItIsFull();
+    }, [data])
+
     function calculateNumber() {
         let number = 0;
         data.forEach((element) => {
@@ -39,8 +48,26 @@ export default function CaminhaoSpecific() {
         return number;
     }
 
+    function checkItIsFull(){
+        const cargo = {weight: 0, space: 0}
+        data.forEach(({produto}, index)=>{
+            const volum = produto.height * produto.length * produto.width * data[index].quantity;
+            const weight = produto.weight * data[index].quantity;
+            cargo.space += volum;
+            cargo.weight += weight;
+        })
+        if(cargo.weight > truckWeightMax) setFullWeight(true)
+        else if(cargo.space > truckSpaceMax) setFullSpace(true)
+        else{
+            setFullWeight(false)
+            setFullSpace(false)
+        }
+    }
+
     return (
         <Container>
+                {<span style={fullWeight ? styleForError : {color: "transparent", maxWidth: 800, width: "90%", fontSize: 24, marginBottom: 10} }>Caminhão excedeu o peso máximo! ajuste a quantidade de acordo com o peso máximo de: {truckWeightMax}Kg!</span>}
+                {<span style={fullSpace ? styleForError : {color: "transparent", fontSize: 24,maxWidth: 800, width: "90%", marginBottom: 10} }>Caminhão excedeu o volume máximo, ajuste a quantidade de acordo com o Volume máximo de: {truckWeightMax}m³!</span>}
             <ContainerCells>
                 <Button bgcolor="blue" color="white" onClick={() => setShowModal(true)}>Adicionar mais produtos</Button>
                 <ContainerCells>

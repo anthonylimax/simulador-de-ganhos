@@ -1,7 +1,7 @@
 import app from "../config/firebase";
 import { Product } from "../interfaces/product";
 import { Truck } from "../interfaces/truck";
-import { addDoc, collection, getDocs, getFirestore, updateDoc, doc, getDoc } from "firebase/firestore";
+import { addDoc, collection, getDocs, getFirestore, updateDoc, doc, getDoc, deleteDoc } from "firebase/firestore";
 
 export class CaminhaoService {
     static instance: CaminhaoService = new CaminhaoService();
@@ -26,11 +26,21 @@ export class CaminhaoService {
 
     async addNewTruck(truck: Truck) {
         try {
-            console.log("Tentando adicionar caminhão:", truck);  // Log para depuração
             await addDoc(collection(this.firestore, "caminhao"), truck);
             console.log("Caminhão adicionado com sucesso!");
+            location.reload();
         } catch (error) {
             console.error("Erro ao adicionar caminhão:", error);
+        }
+    }
+
+    async removeTruckInTable(truckId: string){
+        try{
+            await deleteDoc(doc(this.firestore, "caminhao", truckId));
+            window.location.reload();
+        }
+        catch(e){
+            console.log(e)
         }
     }
 
@@ -38,10 +48,10 @@ export class CaminhaoService {
         try {
             const truckRef = doc(this.firestore, "caminhao", truckId);
             await updateDoc(truckRef, { products });
-
             console.log("Produtos atualizados com sucesso no caminhão!");
+            
         } catch (error) {
-            console.error("Erro ao atualizar produtos no caminhão:", error);
+            console.error("Erro ao atualizar produtos no caminhão:",     error);
         }
     }
 

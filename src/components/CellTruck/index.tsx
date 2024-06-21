@@ -6,6 +6,7 @@ import { CellBody } from "./cell";
 import { calculatePrice as Calc } from "../../services/calculate_price";
 import { useNavigate } from "react-router-dom";
 import { formatadorDeMilharesComRegex } from "../../services/formater";
+import { CaminhaoService } from "../../services/caminhao";
 
 export default function Cell({ truck }: { truck: Truck }) {
     const [volumn, setVolumn] = useState(0);
@@ -63,14 +64,14 @@ export default function Cell({ truck }: { truck: Truck }) {
     return (
         <CellBody onDoubleClick={() => navigate("/caminhao", {state: {products: truck.products, truck: truck} })}>
             <CellContent>{truck.title}</CellContent>
-            <CellContent>{weigth}</CellContent>
-            <CellContent>{volumn}</CellContent>
+            <CellContent>{formatadorDeMilharesComRegex(weigth)}</CellContent>
+            <CellContent>{formatadorDeMilharesComRegex(volumn)}</CellContent>
             <CellContent>{truck.truckSpaceMax}</CellContent>
             <CellContent>{truck.truckWeightMax}</CellContent>
             <CellContent>{quantity}</CellContent>
             <CellContent>{formatadorDeMilharesComRegex(price)}</CellContent>
             <CellContent>
-                <Button bgcolor="red" onClick={() => {}} color="white">Excluir</Button>
+                <Button bgcolor="red" onClick={()=>{ if(truck.id)CaminhaoService.getInstance().removeTruckInTable(truck.id) }} color="white">Excluir</Button>
             </CellContent>
         </CellBody>
     );

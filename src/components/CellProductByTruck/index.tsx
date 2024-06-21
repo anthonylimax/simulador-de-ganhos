@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 
-export default function CellProductByTruck({ product, length, truckId, setData, data, operationCoust, quantity, truckSpaceMax, truckWeightMax}: { product: Product, length: number, truckId: string, setData: any, data: any[],operationCoust: number, quantity: number, truckWeightMax: number, truckSpaceMax: number}) {
+export default function CellProductByTruck({product, length, truckId, setData, data, operationCoust, quantity, truckSpaceMax, truckWeightMax}: { product: Product, length: number, truckId: string, setData: any, data: any[],operationCoust: number, quantity: number, truckWeightMax: number, truckSpaceMax: number}) {
 
 
 
@@ -22,7 +22,6 @@ export default function CellProductByTruck({ product, length, truckId, setData, 
         if (truckId && productId) {
             CaminhaoService.getInstance().removeProductFromTruck(truckId, productId).then(() => {
                 setData(data.filter(product => product.produto.id !== productId));
-                
             });
         } else {
             console.error("truckId or productId is undefined");
@@ -36,14 +35,17 @@ export default function CellProductByTruck({ product, length, truckId, setData, 
 
 
     function handleChange(event : any){
-        const _value = Number(event.target.value);
-        const a = data.findIndex((_, index) => _.produto.id === product.id);
-        const newData = [...data];
-        newData[a].quantity = _value;
-        setData(newData);
-        const totalWeight = _value * product.weight;
-        if(totalWeight/truckWeightMax * 100 > 100) setExceedsLimit(true)
-        else setExceedsLimit(false)
+        console.log(event)
+            const _value = Number(event.target.value);
+            const a = data.findIndex((_, index) => _.produto.id === product.id);
+            const newData = [...data];
+            newData[a].quantity = _value;
+            setData(newData);
+            const totalSpace = _value * product.height * product.width * product.length;
+            const totalWeight = _value * product.weight;
+            console.log(totalSpace)
+            if(totalWeight/truckWeightMax * 100 > 100 || totalSpace/truckSpaceMax * 100 > 100) setExceedsLimit(true)
+            else setExceedsLimit(false)
     }
     
      return (
@@ -53,9 +55,9 @@ export default function CellProductByTruck({ product, length, truckId, setData, 
     } : {}}>
         <CellContent> <InputQuantity value={quantity} onChange={handleChange} type="number"></InputQuantity> </CellContent>
         <CellContent>{product.name}</CellContent>
-        <CellContent>{formatadorDeMilharesComRegex(finalPrice)}</CellContent>
+        <CellContent>{quantity > 0 ? formatadorDeMilharesComRegex(finalPrice) : 0}</CellContent>
         <CellContent>{formatadorDeMilharesComRegex(quantity * product.weight / truckWeightMax * 100) + "%"}</CellContent>
-        <CellContent>{formatadorDeMilharesComRegex(product.height * product.length * product.width * quantity)}</CellContent>
+        <CellContent>{formatadorDeMilharesComRegex(product.height * product.length * product.width * quantity / truckSpaceMax * 100)}</CellContent>
         <CellContent>{formatadorDeMilharesComRegex(finalPrice * quantity)}</CellContent>
         <CellContent>{truckWeightMax}</CellContent>
         <CellContent>{truckSpaceMax}</CellContent>

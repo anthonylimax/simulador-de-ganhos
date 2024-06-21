@@ -23,9 +23,9 @@ export default function Simulacao() {
 
     return (
         <Container>
-            <h2>Combinações</h2>
+            <h2>Caminhões</h2>
             <h3>Aqui você pode fazer seus caminhões e adicionar os produtos que desejar!</h3>
-            <Button onClick={() => setClick(true)} color="white" bgcolor="blue" style={{ fontWeight: "bold", marginTop: 50 }}>Adicionar nova combinação</Button>
+            <Button onClick={() => setClick(true)} color="white" bgcolor="blue" style={{ fontWeight: "bold", marginTop: 50 }}>Adicionar novo Caminhão</Button>
             <ContainerCells>
                 <HeaderTruck></HeaderTruck>
                 {
@@ -42,23 +42,25 @@ export default function Simulacao() {
                             <Form style={{ flexDirection: "column", width: "100%",alignItems:"center",justifyContent: "center" }}>
                                 <div style={{width: "300px", display:"flex",flexDirection: "column",alignItems:"center", height:"100%" ,justifyContent: "space-around"}}>
                                     <JoinField>
-                                        <InputLabel>Nome da combinação:</InputLabel>
+                                        <InputLabel>Nome:</InputLabel>
                                         <Field onChange={({ target }) => setCreateNewTruck({...createNewTruck, title: target.value})} type="text" />
                                     </JoinField>
                                     <JoinField>
-                                        <InputLabel>Peso máximo do caminhão:</InputLabel>
+                                        <InputLabel>Peso máximo do caminhão (Kg):</InputLabel>
                                         <Field onChange={({ target }) => setCreateNewTruck({...createNewTruck, truckWeightMax: Number(target.value)})} type="text" />
                                     </JoinField>
                                     <JoinField>
-                                        <InputLabel>Custo Operacional:</InputLabel>
+                                        <InputLabel>Custo Operacional + frete (R$):</InputLabel>
                                         <Field onChange={({ target }) => setCreateNewTruck({...createNewTruck, operationCoust: Number(target.value)})} type="text" />
                                     </JoinField>
                                     <JoinField>
-                                        <InputLabel>Volume Máximo:</InputLabel>
+                                        <InputLabel>Volume Máximo (m³):</InputLabel>
                                         <Field onChange={({ target }) => setCreateNewTruck({...createNewTruck, truckSpaceMax: Number(target.value)})} type="text" />
                                     </JoinField>
                                     <div>
-                                        <Button onClick={()=>CaminhaoService.getInstance().addNewTruck(createNewTruck)} color="white" bgcolor="green">Confirmar</Button>
+                                        <Button onClick={()=>{
+                                            CaminhaoService.getInstance().addNewTruck(createNewTruck)
+                                        }} color="white" bgcolor="green">Confirmar</Button>
                                         <Button onClick={() => setClick(false)} bgcolor="red" color="white">Cancelar</Button>
                                     </div>
                                 </div>
