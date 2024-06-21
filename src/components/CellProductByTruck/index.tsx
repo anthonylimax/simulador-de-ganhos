@@ -37,7 +37,7 @@ export default function CellProductByTruck({product, length, truckId, setData, d
     function handleChange(event : any){
         console.log(event)
             const _value = Number(event.target.value);
-            const a = data.findIndex((_, index) => _.produto.id === product.id);
+            const a = data.findIndex((_) => _.produto.id === product.id);
             const newData = [...data];
             newData[a].quantity = _value;
             setData(newData);
