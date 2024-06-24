@@ -11,6 +11,7 @@ import { CaminhaoService } from "../../services/caminhao";
 import { Button } from "../Register/register";
 import HeaderToSpecific from "../../components/headerToSpecific";
 import { formatadorDeMilharesComRegex } from "../../services/formater";
+import { calculatePrice } from "../../services/calculate_price";
 
 export default function CaminhaoSpecific() {
 
@@ -25,6 +26,7 @@ export default function CaminhaoSpecific() {
     const [fullWeight, setFullWeight] = useState(false);
     const [fullSpace, setFullSpace] = useState(false);
     const [profit, setProfit] = useState(0);
+    const [finalPrice, setFinalPrice] = useState(0);
     const [operationCoust, setOperationCoust] = useState(0);
     const styleForErrorWeigth : React.CSSProperties = {fontSize: 24, color: fullWeight ? "#FF0000" : "black", maxWidth: 800, width: "90%", textAlign: "center", marginBottom: 10};
     const styleForErrorVolumn : React.CSSProperties = {fontSize: 24, color: fullSpace ? "#FF0000" : "black", maxWidth: 800, width: "90%", textAlign: "center", marginBottom: 10};
@@ -39,15 +41,20 @@ export default function CaminhaoSpecific() {
             setTruckSpaceMax(truck ? truck.truckSpaceMax : 0);
             setTruckWeightMax(truck ? truck.truckWeightMax : 0);
             setProfit(truck ? truck.profit : 0);
+            let totalPrice = 0;
+            
+            truck && truck.products.forEach(product => {
+                totalPrice += calculatePrice(product.produto,truck.profit , calculateNumber(), truck.operationCoust) * product.quantity; 
+            });
+            setFinalPrice(totalPrice)
         });
-    }, [location]);
+    }, [location, data]);
 
     
     useEffect(()=>{
         checkItIsFull();
     }, [data])
-
-
+    
 
     function calculateNumber() {
         let number = 0;
@@ -76,6 +83,7 @@ export default function CaminhaoSpecific() {
     }
     return (
         <Container>
+                <span style={{color: "blue", fontSize: 22}}>Valor Final: {formatadorDeMilharesComRegex(finalPrice)}</span>
                 <span style={styleForErrorWeigth}>Peso: {formatadorDeMilharesComRegex(+occupedTruckWeight)}/{formatadorDeMilharesComRegex(+truckWeightMax)}</span>
                 <span style={styleForErrorVolumn}>Volume: {formatadorDeMilharesComRegex(+occupedTruckVolumn)}/{formatadorDeMilharesComRegex(+truckSpaceMax)}</span>
             <ContainerCells>
