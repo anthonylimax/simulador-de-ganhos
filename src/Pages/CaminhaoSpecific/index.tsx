@@ -83,7 +83,7 @@ export default function CaminhaoSpecific() {
     }
     return (
         <Container>
-                <span style={{color: "blue", fontSize: 22}}>Valor Final: {formatadorDeMilharesComRegex(finalPrice)}</span>
+                <span style={{color: "blue", fontSize: 22}}>Valor Final: R$ {formatadorDeMilharesComRegex(finalPrice)}</span>
                 <span style={styleForErrorWeigth}>Peso: {formatadorDeMilharesComRegex(+occupedTruckWeight)}/{formatadorDeMilharesComRegex(+truckWeightMax)}</span>
                 <span style={styleForErrorVolumn}>Volume: {formatadorDeMilharesComRegex(+occupedTruckVolumn)}/{formatadorDeMilharesComRegex(+truckSpaceMax)}</span>
             <ContainerCells>
