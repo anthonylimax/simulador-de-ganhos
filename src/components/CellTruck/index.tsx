@@ -33,6 +33,7 @@ export default function Cell({ truck }: { truck: Truck }) {
         let totalWeight = 0;
         truck.products.forEach(product => {
                 totalWeight += product.produto.weight * product.quantity;
+                
         });
         setWeigth(totalWeight);
     };
@@ -41,6 +42,7 @@ export default function Cell({ truck }: { truck: Truck }) {
         let totalQuantity = 0;
         truck.products.forEach(product => {
             totalQuantity += product.quantity;
+            
         });
         setQuantity(totalQuantity);
     };
@@ -49,15 +51,18 @@ export default function Cell({ truck }: { truck: Truck }) {
         let totalPrice = 0;
         truck.products.forEach(product => {
             totalPrice += Calc(product.produto,truck.profit ,quantity, truck.operationCoust) * product.quantity;
+            
         });
+
         setPrice(totalPrice);
     };
 
     const calculateVolumn = () => {
         let totalVolumn = 0;
         truck!.products.forEach(product => {
-                totalVolumn += product!.produto!.weight * product!.produto!.height * product!.produto!.length;
-        });
+                totalVolumn += product.produto.width * product.produto.height * product.produto.length * product.quantity;
+
+            });
         setVolumn(totalVolumn);
     };
 
