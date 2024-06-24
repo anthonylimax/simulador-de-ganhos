@@ -9,16 +9,14 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 
-export default function CellProductByTruck({product, length, truckId, setData, data, operationCoust, quantity, truckSpaceMax, truckWeightMax}: { product: Product, length: number, truckId: string, setData: any, data: any[],operationCoust: number, quantity: number, truckWeightMax: number, truckSpaceMax: number}) {
+export default function CellProductByTruck({product, length, truckId, setData, data, operationCoust, quantity, truckSpaceMax, truckWeightMax, profit}: { product: Product, length: number, truckId: string, setData: any, data: any[],operationCoust: number, quantity: number, truckWeightMax: number, truckSpaceMax: number, profit: number}) {
 
 
 
     const location = useLocation();
-    console.log(location)
-    const finalPrice : number = calculatePrice(product, length, operationCoust);
+    const [finalPrice, setFinalPrice] = useState(() => calculatePrice(product, profit, length, operationCoust)); 
     const [exceedsLimit, setExceedsLimit] = useState(false);
     function handleRemoveProduct(productId: string) {
-
         if (truckId && productId) {
             CaminhaoService.getInstance().removeProductFromTruck(truckId, productId).then(() => {
                 setData(data.filter(product => product.produto.id !== productId));
@@ -28,9 +26,9 @@ export default function CellProductByTruck({product, length, truckId, setData, d
         }
     }
 
-
     useEffect(()=>{
         CaminhaoService.getInstance().updateTruckProducts(truckId, data);
+        setFinalPrice(calculatePrice(product, profit, length, operationCoust))
     }, [data])
 
 
@@ -56,8 +54,8 @@ export default function CellProductByTruck({product, length, truckId, setData, d
         <CellContent> <InputQuantity value={quantity} onChange={handleChange} type="number"></InputQuantity> </CellContent>
         <CellContent>{product.name}</CellContent>
         <CellContent>{quantity > 0 ? formatadorDeMilharesComRegex(finalPrice) : 0}</CellContent>
-        <CellContent>{formatadorDeMilharesComRegex(quantity * product.weight / truckWeightMax * 100) + "%"}</CellContent>
-        <CellContent>{formatadorDeMilharesComRegex(product.height * product.length * product.width * quantity / truckSpaceMax * 100)}</CellContent>
+        <CellContent>{formatadorDeMilharesComRegex(quantity * product.weight)}</CellContent>
+        <CellContent>{formatadorDeMilharesComRegex(product.height * product.length * product.width * quantity)}</CellContent>
         <CellContent>{formatadorDeMilharesComRegex(finalPrice * quantity)}</CellContent>
         <CellContent>{truckWeightMax}</CellContent>
         <CellContent>{truckSpaceMax}</CellContent>

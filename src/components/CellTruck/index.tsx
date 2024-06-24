@@ -48,7 +48,7 @@ export default function Cell({ truck }: { truck: Truck }) {
     const calculateTotalPrice = () => {
         let totalPrice = 0;
         truck.products.forEach(product => {
-            totalPrice += Calc(product.produto, quantity, truck.operationCoust) * product.quantity;
+            totalPrice += Calc(product.produto,truck.profit ,quantity, truck.operationCoust) * product.quantity;
         });
         setPrice(totalPrice);
     };

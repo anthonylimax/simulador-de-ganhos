@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, ChangeEventHandler, useEffect, useState } from "react";
 import { Container, ContainerCells } from "../../styles/global_styles";
 import { CaminhaoService } from "./../../services/caminhao"
 import { Truck } from "../../interfaces/truck";
@@ -9,7 +9,7 @@ import HeaderTruck from "../../components/HeaderTruck";
 
 export default function Simulacao() {
     const [data, setData]: [Truck[], any] = useState([]);
-    const [createNewTruck, setCreateNewTruck] = useState<Truck>({operationCoust: 0, products: [], title: "", truckWeightMax: 0, truckSpaceMax: 0});
+    const [createNewTruck, setCreateNewTruck] = useState<Truck>({operationCoust: 0,  profit: 0, products: [], title: "", truckWeightMax: 0, truckSpaceMax: 0});
     const [click, setClick] = useState(false);
     const service: CaminhaoService = CaminhaoService.getInstance();
     
@@ -20,6 +20,11 @@ export default function Simulacao() {
             console.log("erro")
         })
     }, [])
+
+    function handleInputs(event : ChangeEvent<HTMLInputElement>){
+        
+        setCreateNewTruck({...createNewTruck, [event.target.name]: event.target.value})
+    }
 
     return (
         <Container>
@@ -43,19 +48,23 @@ export default function Simulacao() {
                                 <div style={{width: "300px", display:"flex",flexDirection: "column",alignItems:"center", height:"100%" ,justifyContent: "space-around"}}>
                                     <JoinField>
                                         <InputLabel>Nome:</InputLabel>
-                                        <Field onChange={({ target }) => setCreateNewTruck({...createNewTruck, title: target.value})} type="text" />
+                                        <Field name="title" onChange={handleInputs} type="text" />
                                     </JoinField>
                                     <JoinField>
                                         <InputLabel>Peso máximo do caminhão (Kg):</InputLabel>
-                                        <Field onChange={({ target }) => setCreateNewTruck({...createNewTruck, truckWeightMax: Number(target.value)})} type="text" />
+                                        <Field name="truckWeightMax" onChange={handleInputs} type="text" />
                                     </JoinField>
                                     <JoinField>
                                         <InputLabel>Custo Operacional + frete (R$):</InputLabel>
-                                        <Field onChange={({ target }) => setCreateNewTruck({...createNewTruck, operationCoust: Number(target.value)})} type="text" />
+                                        <Field name="operationCoust" onChange={handleInputs} type="text" />
                                     </JoinField>
                                     <JoinField>
                                         <InputLabel>Volume Máximo (m³):</InputLabel>
-                                        <Field onChange={({ target }) => setCreateNewTruck({...createNewTruck, truckSpaceMax: Number(target.value)})} type="text" />
+                                        <Field name="truckSpaceMax" onChange={handleInputs} type="text" />
+                                    </JoinField>
+                                    <JoinField>
+                                        <InputLabel>Lucro Total desejado (R$):</InputLabel>
+                                        <Field name="profit" onChange={handleInputs} type="text" />
                                     </JoinField>
                                     <div>
                                         <Button onClick={()=>{

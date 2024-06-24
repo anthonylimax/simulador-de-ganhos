@@ -10,19 +10,24 @@ import CellProductByTruck from "../../components/CellProductByTruck";
 import { CaminhaoService } from "../../services/caminhao";
 import { Button } from "../Register/register";
 import HeaderToSpecific from "../../components/headerToSpecific";
+import { formatadorDeMilharesComRegex } from "../../services/formater";
 
 export default function CaminhaoSpecific() {
 
 
-    const styleForError : React.CSSProperties = {fontSize: 24, color: "#FF0000", maxWidth: 800, width: "90%", textAlign: "center", marginBottom: 10};
     const location = useLocation();
+    const [occupedTruckWeight, setOccupedTruckWeigth] = useState(0);
+    const [occupedTruckVolumn, setOccupedTruckVolumn] = useState(0);
     const [data, setData] : [{produto: Product, quantity: number}[], any] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [allProducts, setAllProducts] : [Product[], any] = useState([]);
     const truckId = location.state.truck.id;
-    const [fullSpace, setFullSpace] = useState(false);
     const [fullWeight, setFullWeight] = useState(false);
+    const [fullSpace, setFullSpace] = useState(false);
+    const [profit, setProfit] = useState(0);
     const [operationCoust, setOperationCoust] = useState(0);
+    const styleForErrorWeigth : React.CSSProperties = {fontSize: 24, color: fullWeight ? "#FF0000" : "black", maxWidth: 800, width: "90%", textAlign: "center", marginBottom: 10};
+    const styleForErrorVolumn : React.CSSProperties = {fontSize: 24, color: fullSpace ? "#FF0000" : "black", maxWidth: 800, width: "90%", textAlign: "center", marginBottom: 10};
     const [truckSpaceMax, setTruckSpaceMax] = useState(0);
     const [truckWeightMax, setTruckWeightMax] = useState(0);
     useEffect(() => {
@@ -33,12 +38,16 @@ export default function CaminhaoSpecific() {
             setOperationCoust(truck ? truck.operationCoust : 0);
             setTruckSpaceMax(truck ? truck.truckSpaceMax : 0);
             setTruckWeightMax(truck ? truck.truckWeightMax : 0);
+            setProfit(truck ? truck.profit : 0);
         });
     }, [location]);
 
+    
     useEffect(()=>{
         checkItIsFull();
     }, [data])
+
+
 
     function calculateNumber() {
         let number = 0;
@@ -56,6 +65,8 @@ export default function CaminhaoSpecific() {
             cargo.space += volum;
             cargo.weight += weight;
         })
+        setOccupedTruckWeigth(cargo.weight);
+        setOccupedTruckVolumn(cargo.space);
         if(cargo.weight > truckWeightMax) setFullWeight(true)
         else if(cargo.space > truckSpaceMax) setFullSpace(true)
         else{
@@ -63,18 +74,17 @@ export default function CaminhaoSpecific() {
             setFullSpace(false)
         }
     }
-
     return (
         <Container>
-                {<span style={fullWeight ? styleForError : {color: "transparent", maxWidth: 800, width: "90%", fontSize: 24, marginBottom: 10} }>Caminhão excedeu o peso máximo! ajuste a quantidade de acordo com o peso máximo de: {truckWeightMax}Kg!</span>}
-                {<span style={fullSpace ? styleForError : {color: "transparent", fontSize: 24,maxWidth: 800, width: "90%", marginBottom: 10} }>Caminhão excedeu o volume máximo, ajuste a quantidade de acordo com o Volume máximo de: {truckWeightMax}m³!</span>}
+                <span style={styleForErrorWeigth}>Peso: {formatadorDeMilharesComRegex(+occupedTruckWeight)}/{formatadorDeMilharesComRegex(+truckWeightMax)}</span>
+                <span style={styleForErrorVolumn}>Volume: {formatadorDeMilharesComRegex(+occupedTruckVolumn)}/{formatadorDeMilharesComRegex(+truckSpaceMax)}</span>
             <ContainerCells>
                 <Button bgcolor="blue" color="white" onClick={() => setShowModal(true)}>Adicionar mais produtos</Button>
                 <ContainerCells>
                     <HeaderToSpecific />
                     {
                         data.map((product) => (
-                                <CellProductByTruck length={calculateNumber()} operationCoust={operationCoust} product={{ ...product.produto }} truckId={truckId} setData={setData} data={data} quantity={product.quantity} truckWeightMax={truckWeightMax} truckSpaceMax={truckSpaceMax} />
+                                <CellProductByTruck profit={profit} length={calculateNumber()} operationCoust={operationCoust} product={{ ...product.produto }} truckId={truckId} setData={setData} data={data} quantity={product.quantity} truckWeightMax={truckWeightMax} truckSpaceMax={truckSpaceMax} />
                                 
                         ))
                     }

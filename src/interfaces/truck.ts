@@ -9,6 +9,7 @@ export type Truck = {
         quantity: number,
         produto: Product,
     }[],
+    profit: number,
     operationCoust: number,
 }
 

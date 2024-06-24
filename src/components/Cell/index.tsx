@@ -15,7 +15,7 @@ export default function Cell({ product }: { product: Product }) {
     const productService = ProductServices.getInstance();
     const [canShowModal, setCanShowModal] = useState(false);
     const result = calculateMaxProducts(product);
-    const finalPrice : number = calculatePrice(product, result, product.operationCoust);
+    const finalPrice : number = calculatePrice(product, product.profit, result, product.operationCoust);
      return (
     <CellBody>
         <CellContent>{product.name}</CellContent>

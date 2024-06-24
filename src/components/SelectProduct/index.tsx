@@ -9,7 +9,7 @@ import { CaminhaoService } from "../../services/caminhao";
 
 export default function SelectProduct({ product, caminhao }: { product: Product, caminhao: Truck }) {
     const result = calculateMaxProducts(product);
-    const finalPrice: number = calculatePrice(product, result, caminhao.operationCoust);
+    const finalPrice: number = calculatePrice(product, caminhao.profit, result, caminhao.operationCoust);
     const [currentTruck, setCurrentTruck] : [Truck | undefined, any] = useState(); 
     useLayoutEffect(()=>{
         CaminhaoService.getInstance().getAllTrucks().then((truck : Truck[]) => {

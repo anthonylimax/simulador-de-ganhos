@@ -6,8 +6,8 @@ export default function HeaderToSpecific() {
             <CellContent>Quantidade</CellContent>
             <CellContent>Nome do Produto</CellContent>
             <CellContent>Valor Unitário</CellContent>
-            <CellContent>Peso Ocupado (%)</CellContent>
-            <CellContent>Volume Ocupado (%)</CellContent>
+            <CellContent>Peso Ocupado (Kg)</CellContent>
+            <CellContent>Volume Ocupado (m³)</CellContent>
             <CellContent>Valor Total</CellContent>
             <CellContent>Peso Máximo (Caminhão)</CellContent>
             <CellContent>Volume Máximo (Caminhão)</CellContent>
