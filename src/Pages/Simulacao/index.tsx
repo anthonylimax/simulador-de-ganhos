@@ -1,4 +1,4 @@
-import { ChangeEvent, ChangeEventHandler, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Container, ContainerCells } from "../../styles/global_styles";
 import { CaminhaoService } from "./../../services/caminhao"
 import { Truck } from "../../interfaces/truck";

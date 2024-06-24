@@ -6,14 +6,12 @@ import { calculatePrice } from "../../services/calculate_price";
 import { formatadorDeMilharesComRegex } from "../../services/formater";
 import { CaminhaoService } from "../../services/caminhao";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 
 
 export default function CellProductByTruck({product, length, truckId, setData, data, operationCoust, quantity, truckSpaceMax, truckWeightMax, profit}: { product: Product, length: number, truckId: string, setData: any, data: any[],operationCoust: number, quantity: number, truckWeightMax: number, truckSpaceMax: number, profit: number}) {
 
 
 
-    const location = useLocation();
     const [finalPrice, setFinalPrice] = useState(() => calculatePrice(product, profit, length, operationCoust)); 
     const [exceedsLimit, setExceedsLimit] = useState(false);
     function handleRemoveProduct(productId: string) {
