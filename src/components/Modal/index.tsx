@@ -1,5 +1,4 @@
 import { Dispatch, useEffect, useState } from "react";
-import { Product } from "../../interfaces/product";
 import { Smocker, Modal as ModalContainer } from "../Cell/cell";
 import { Button, Field, Form, InputLabel, JoinField } from "./modal";
 import { ProductServices } from "../../services/product";
