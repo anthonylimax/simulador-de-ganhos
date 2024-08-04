@@ -70,17 +70,11 @@ export default function Modal({product, setModal} : {product : RawProduct, setMo
 
                 <Button type="button" disabled={validation} onClick={async ()=> {
                     if(data.id){
-                        const result : Product = {
+                        const result : RawProduct = {
                             factoryPrice: data.factoryPrice,
                             height: data.height,
-                            icms: data.icms,
-                            ipi: data.ipi,
                             length: data.length,
                             name: data.name,
-                            operationCoust: data.operationCoust,
-                            profit: data.profit,
-                            truckSpaceMax: data.truckSpaceMax,
-                            truckWeightMax: data.truckWeightMax,
                             weight: data.weight,
                             width: data.width,
                             
