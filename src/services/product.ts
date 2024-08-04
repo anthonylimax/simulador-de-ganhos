@@ -1,5 +1,4 @@
 import app from "../config/firebase";
-import { Product } from "../interfaces/product";
 import { addDoc, collection, getDocs, getFirestore, deleteDoc, doc, updateDoc} from "firebase/firestore";
 import { RawProduct } from "../interfaces/RawProduct";
 

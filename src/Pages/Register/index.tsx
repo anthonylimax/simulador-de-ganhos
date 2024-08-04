@@ -1,7 +1,6 @@
 import { Container, Title } from "../../styles/global_styles";
 import { Button, Field, Form, InputLabel, JoinField } from "./register";
 import { useEffect, useState } from "react";
-import { Product } from "../../interfaces/product";
 import { ProductServices } from "../../services/product";
 import { RawProduct } from "../../interfaces/RawProduct";
 
