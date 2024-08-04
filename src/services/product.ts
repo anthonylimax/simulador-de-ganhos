@@ -1,6 +1,7 @@
 import app from "../config/firebase";
 import { Product } from "../interfaces/product";
 import { addDoc, collection, getDocs, getFirestore, deleteDoc, doc, updateDoc} from "firebase/firestore";
+import { RawProduct } from "../interfaces/RawProduct";
 
 export class ProductServices {
     static instance: ProductServices = new ProductServices();
@@ -11,7 +12,7 @@ export class ProductServices {
     static getInstance() {
         return this.instance;
     }
-    async getAllProducts(): Promise<Product[]> {
+    async getAllProducts(): Promise<RawProduct[]> {
         try {
             const produtosRef = collection(this.firestore, 'produtos');
             const produtosSnapshot = await getDocs(produtosRef);
@@ -39,10 +40,10 @@ export class ProductServices {
         }
     }
 
-    async addProductInTable(product: Product) {
+    async addProductInTable(product: RawProduct) {
         try {
-            await addDoc(collection(this.firestore, "produtos"), product);
-            console.log("Produto adicionado com sucesso!");
+            await addDoc(collection(this.firestore,"produtos"), product);
+            console.log("Produto adicionado com su  cesso!");
             return 0;
         } catch (error) {
             console.log("Erro ao adicionar o produto:", error);
@@ -50,7 +51,7 @@ export class ProductServices {
         }
     }
 
-    async editProductInTable(id: string, updatedProduct: Product) {
+    async editProductInTable(id: string, updatedProduct: RawProduct) {
         try {
             const productRef = doc(this.firestore, "produtos", id);
             await updateDoc(productRef, updatedProduct);

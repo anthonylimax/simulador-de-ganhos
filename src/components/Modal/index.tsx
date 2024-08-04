@@ -3,20 +3,21 @@ import { Product } from "../../interfaces/product";
 import { Smocker, Modal as ModalContainer } from "../Cell/cell";
 import { Button, Field, Form, InputLabel, JoinField } from "./modal";
 import { ProductServices } from "../../services/product";
+import { RawProduct } from "../../interfaces/RawProduct";
 
 
-export default function Modal({product, setModal} : {product : Product, setModal : Dispatch<any>}){
+export default function Modal({product, setModal} : {product : RawProduct, setModal : Dispatch<any>}){
     
     const productService = ProductServices.getInstance();
     
-    const [data, setData]: [data: Product, setData: any] = useState(product);
+    const [data, setData]: [data: RawProduct, setData: any] = useState(product);
      const [validation, setValidation] = useState(true);
     
      useEffect(()=>{
         verificadorDeCampos();
      },[data])
      function verificadorDeCampos(): boolean {
-        const keys: Array<keyof Product> = Object.keys(data) as Array<keyof Product>;
+        const keys: Array<keyof RawProduct> = Object.keys(data) as Array<keyof RawProduct>;
         const copyData = { ...data };
         console.log("here");
         console.log(validation);
@@ -51,28 +52,8 @@ export default function Modal({product, setModal} : {product : Product, setModal
                     <Field value={data.factoryPrice} onChange={({target})=> setData({...data, factoryPrice: Number(target.value)})} type="number" />
                 </JoinField>
                 <JoinField>
-                    <InputLabel>IPI</InputLabel>
-                    <Field value={data.ipi} onChange={({target})=> setData({...data, ipi: Number(target.value)})} type="number" />
-                </JoinField>
-                <JoinField>
-                    <InputLabel>ICMS</InputLabel>
-                    <Field value={data.icms} onChange={({target})=> setData({...data, icms: Number(target.value)})} type="number" />
-                </JoinField>
-                <JoinField>
                     <InputLabel>Peso</InputLabel>
                     <Field value={data.weight} onChange={({target})=> setData({...data, weight: Number(target.value)})} type="number" />
-                </JoinField>
-                <JoinField>
-                    <InputLabel>Lucro desejado</InputLabel>
-                    <Field value={data.profit} onChange={({target})=> setData({...data, profit: Number(target.value)})} type="number" />
-                </JoinField>
-                <JoinField>
-                    <InputLabel>Peso Máximo do Caminhão (kg)</InputLabel>
-                    <Field value={data.truckWeightMax} onChange={({target})=> setData({...data, truckWeightMax: Number(target.value)})} type="number" />
-                </JoinField>
-                <JoinField>
-                    <InputLabel>Volume Máximo do Caminhão (m³)</InputLabel>
-                    <Field value={data.truckSpaceMax} onChange={({target})=> setData({...data, truckSpaceMax: Number(target.value)})} type="number" />
                 </JoinField>
                 <JoinField>
                     <InputLabel>Largura (m³)</InputLabel>
@@ -85,10 +66,6 @@ export default function Modal({product, setModal} : {product : Product, setModal
                 <JoinField>
                     <InputLabel>Comprimento (m³)</InputLabel>
                     <Field value={data.length} onChange={({target})=> setData({...data, length: Number(target.value)})} type="number" />
-                </JoinField>
-                <JoinField>
-                    <InputLabel>Custo operacional</InputLabel>
-                    <Field value={data.operationCoust} onChange={({target})=> setData({...data, operationCoust: Number(target.value)})} type="number" />
                 </JoinField>
 
                 <Button type="button" disabled={validation} onClick={async ()=> {

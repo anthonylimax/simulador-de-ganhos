@@ -3,13 +3,13 @@ import { Button, Field, Form, InputLabel, JoinField } from "./register";
 import { useEffect, useState } from "react";
 import { Product } from "../../interfaces/product";
 import { ProductServices } from "../../services/product";
+import { RawProduct } from "../../interfaces/RawProduct";
 
 export default function Register() {
     const product = ProductServices.getInstance();
-    const [data, setData]: [data: Product, setData: any] = useState({
-        factoryPrice: -1, height: -1, icms: -1, ipi: -1, length: -1,
-        weight: -1, profit: -1, name: "", width: -1, truckSpaceMax: -1,
-        truckWeightMax: -1, operationCoust: -1
+    const [data, setData]: [data: RawProduct, setData: any] = useState({
+        factoryPrice: -1, height: -1, length: -1,
+        weight: -1,name: "", width: -1
     });
     const [validation, setValidation] = useState(true);
 
@@ -18,7 +18,7 @@ export default function Register() {
     }, [data]);
 
     function verificadorDeCampos(): boolean {
-        const keys: Array<keyof Product> = Object.keys(data) as Array<keyof Product>;
+        const keys: Array<keyof RawProduct> = Object.keys(data) as Array<keyof RawProduct>;
         const copyData = { ...data };
         for (let i = 0; i < keys.length; i++) {
             if (copyData[keys[i]] == -1 || copyData[keys[i]] == "") {
@@ -43,28 +43,8 @@ export default function Register() {
                     <Field onChange={({ target }) => setData({ ...data, factoryPrice: Number(target.value) })} type="number" />
                 </JoinField>
                 <JoinField>
-                    <InputLabel>IPI (%)</InputLabel>
-                    <Field onChange={({ target }) => setData({ ...data, ipi: Number(target.value) })} type="number" />
-                </JoinField>
-                <JoinField>
-                    <InputLabel>ICMS (%)</InputLabel>
-                    <Field onChange={({ target }) => setData({ ...data, icms: Number(target.value) })} type="number" />
-                </JoinField>
-                <JoinField>
                     <InputLabel>Peso (Kg)</InputLabel>
                     <Field onChange={({ target }) => setData({ ...data, weight: Number(target.value) })} type="number" />
-                </JoinField>
-                <JoinField>
-                    <InputLabel>Lucro desejado (R$)</InputLabel>
-                    <Field onChange={({ target }) => setData({ ...data, profit: Number(target.value) })} type="number" />
-                </JoinField>
-                <JoinField>
-                    <InputLabel>Peso Máximo do Caminhão (kg)</InputLabel>
-                    <Field onChange={({ target }) => setData({ ...data, truckWeightMax: Number(target.value) })} type="number" />
-                </JoinField>
-                <JoinField>
-                    <InputLabel>Volume Máximo do Caminhão (m³)</InputLabel>
-                    <Field onChange={({ target }) => setData({ ...data, truckSpaceMax: Number(target.value) })} type="number" />
                 </JoinField>
                 <JoinField>
                     <InputLabel>Largura (m)</InputLabel>
@@ -77,10 +57,6 @@ export default function Register() {
                 <JoinField>
                     <InputLabel>Comprimento (m)</InputLabel>
                     <Field onChange={({ target }) => setData({ ...data, length: Number(target.value) })} type="number" />
-                </JoinField>
-                <JoinField>
-                    <InputLabel>Custo operacional + frete</InputLabel>
-                    <Field onChange={({ target }) => setData({ ...data, operationCoust: Number(target.value) })} type="number" />
                 </JoinField>
 
                 <Button type="button" disabled={validation} onClick={async () => {

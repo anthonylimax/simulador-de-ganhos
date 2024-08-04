@@ -6,10 +6,10 @@ import { CellBody, CellContent } from "../../styles/global_styles";
 import { calculatePrice } from "../../services/calculate_price";
 import { Truck } from "../../interfaces/truck";
 import { CaminhaoService } from "../../services/caminhao";
+import { formatadorDeMilharesComRegex } from "../../services/formater";
 
 export default function SelectProduct({ product, caminhao }: { product: Product, caminhao: Truck }) {
-    const result = calculateMaxProducts(product);
-    const finalPrice: number = calculatePrice(product, caminhao.profit, result, caminhao.operationCoust);
+    const finalPrice: number = product.factoryPrice;
     const [currentTruck, setCurrentTruck] : [Truck | undefined, any] = useState(); 
     useLayoutEffect(()=>{
         CaminhaoService.getInstance().getAllTrucks().then((truck : Truck[]) => {
@@ -34,13 +34,9 @@ export default function SelectProduct({ product, caminhao }: { product: Product,
     return (
         <CellBody>
             <CellContent>{product.name}</CellContent>
-            <CellContent>{finalPrice.toFixed(2)}</CellContent>
+            <CellContent>{formatadorDeMilharesComRegex(finalPrice)}</CellContent>
             <CellContent>{product.weight}</CellContent>
             <CellContent>{(product.height * product.length * product.width).toFixed(2)}</CellContent>
-            <CellContent>{product.truckSpaceMax}</CellContent>
-            <CellContent>{product.truckWeightMax}</CellContent>
-            <CellContent>{result}</CellContent>
-            <CellContent>{(result * finalPrice).toFixed(2)}</CellContent>
             <CellContent>
                 <Button bgcolor="blue" onClick={handleAddProduct} color="white">Adicionar</Button>
             </CellContent>
